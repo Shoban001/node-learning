@@ -29,7 +29,10 @@ const logEvents = async (msg) => {
         uniqueId : uuid()
     }
     try{
-        const res = await fsPromises.appendFile(path.join(__dirname,'new','MsgData.json'), JSON.stringify(logData));
+        if(!fs.existsSync('./logs')){
+            await fsPromises.mkdir(path.join(__dirname,'logs'))
+        }
+        const res = await fsPromises.appendFile(path.join(__dirname,'logs','MsgData.json'), JSON.stringify(logData));
         console.log('Data was Appended...!',res)
     }catch(err){
         console.error(err);
